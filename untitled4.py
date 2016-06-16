@@ -4,7 +4,7 @@ from flask import render_template
 from flask import request , redirect
 from flask import  url_for
 from flask import session
-
+from sqlalchemy.orm import sessionmaker
 
 
 
@@ -50,7 +50,6 @@ def login():
     if request.method == 'POST':
         if valid_login(request.form['email'],
                        request.form['password']):
-
             return redirect(url_for('log_the_user_in'))
         else:
             error = 'Invalid username/password'
@@ -60,25 +59,55 @@ def login():
 
 
 def valid_login(email,password):
-    user = User.query.filter(User.email==email, User.password==password)
+    user = User.query.filter(User.email== email, User.password == password).first()
+
     if user is None:
+
         return False
     else:
-        session["username"]= user.username
-        session["email"]=user.email
-        session ["bio"]=user.bio
-        session["project1"] = user.project1
-        session["project2"]= user.project2
-        session["project3"] = user.project3
+
+        session["email"] = user.email
+        if user.username is not None:
+            session['username'] = user.username
+        else:
+            session['username'] = " "
+
+        if user.bio is not None:
+            session['bio'] = user.bio
+        else:
+            session['bio'] = " "
+        if user.project1 is not None:
+            session['project1'] = user.project1
+        else:
+            session['project1'] = " "
+        if user.project2 is not None:
+            session['project2'] = user.project2
+        else:
+            session['project2'] = " "
+        if user.project3 is not None:
+            session['project3'] = user.project3
+        else:
+            session['project3'] = " "
 
 
         return True
 
+
 @app.route('/profile', methods=['GET'])
 def log_the_user_in():
     email = session['email']
-    return render_template('profile.html',email =email)
+    username = session['username']
+    bio = session['bio']
+    project1 = session['project1']
+    project2 = session['project2']
+    project3 = session['project3']
+    return render_template('profile.html', username=username, email=email, bio=bio, project1=project1, project2=project2, project3=project3)
 
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('email', None)
+    return redirect(url_for('index'))
 
 
 
