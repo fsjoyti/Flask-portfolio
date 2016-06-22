@@ -110,7 +110,7 @@ def log_the_user_in():
 def logout():
     # remove the username from the session if it's there
     session.pop('email', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/update', methods=['GET','POST'])
 def update():
