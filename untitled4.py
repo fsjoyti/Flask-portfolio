@@ -5,6 +5,9 @@ from flask import request , redirect
 from flask import  url_for
 from flask import session
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import update
+
+
 
 
 
@@ -109,17 +112,58 @@ def logout():
     session.pop('email', None)
     return redirect(url_for('index'))
 
+@app.route('/update', methods=['GET','POST'])
+def update():
+    email = session['email']
+    username = session['username']
+    bio = session['bio']
+    project1 = session['project1']
+    project2 = session['project2']
+    project3 = session['project3']
+    error = None
+    if request.method == 'POST':
+        if update_info(request.form['email'],request.form['name'],request.form['bio'],request.form['proj1'],request.form['proj2'],request.form['proj3']):
+            return redirect(url_for('logout'))
+        else:
+            error = 'There was an error in processing your request'
+
+    return render_template('update.html', myName=username, email=email, myBio=bio, myproj1=project1, myproj2=project2, myproj3=project3,error=error)
+def update_info(email,username,bio,project1,project2,project3):
+
+    user = User.query.filter(User.email == session['email']).first()
+    if isNotBlank(bio) and bio != session['bio']:
+        user.bio = bio
+        db.session.commit()
+
+    if isNotBlank(email) and email != session['email']:
+        user.email = email
+        db.session.commit()
+
+    if isNotBlank(username) and username != session['username']:
+        user.username = username
+        db.session.commit()
+
+    if isNotBlank(project1) and project1 != session['project1']:
+        user.project1 = project1
+        db.session.commit()
+
+    if isNotBlank(project2) and project2 != session['project2']:
+        user.project2 = project2
+        db.session.commit()
+
+    if isNotBlank(project3) and project3 != session['project3']:
+        user.project3 = project3
+        db.session.commit()
+
+    return True
 
 
 
 
-
-
-
-
-
-
+def isNotBlank (myString):
+    return (myString and myString.strip())
 if __name__ == '__main__':
+
     app.secret_key = 'A0Zr98j/3yX Z~XHH!lmN]LWX/,?RT'
     app.debug = True
     app.run()

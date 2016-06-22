@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>My profile</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 </head>
 <body>
 <h1>
@@ -10,10 +12,14 @@
 
 </h1>
 <p> {{ bio }}</p> <br>
-<p> {{ project1 }}</p> <br>
-<p> {{ project2 }}</p> <br>
-<p> {{ project3 }}</p> <br>
+<h1> My project experiences </h1>
+<p>My project1 : {{ project1 }}</p> <br>
+<p>My project2 : {{ project2 }}</p> <br>
+<p>My project3 : {{ project3 }}</p> <br>
 <p> You can contact me at {{ email}}</p>
-<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+<a href="/update" class="btn btn-info btn-sm">Change info in my profile</a>
+<a href="/logout" class="btn btn-primary btn-sm">Logout</a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
 </body>
 </html>
