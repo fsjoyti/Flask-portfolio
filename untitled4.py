@@ -157,7 +157,45 @@ def update_info(email,username,bio,project1,project2,project3):
 
     return True
 
+@app.route('/search', methods=['GET','POST'])
 
+def search ():
+    message = None
+    if request.method == 'POST':
+        user = User.query.filter(User.username == request.form['name']).first()
+        if user is None:
+            message = 'The following user was not found'
+            return render_template('notfound.html', message = message)
+        else:
+            email = user.email
+            if user.username is not None:
+                username = user.username
+            else:
+                username = ""
+            if user.bio is not None:
+                bio = user.bio
+            else:
+                bio = ""
+            if user.project1 is not None:
+                project1 = user.project1
+            else:
+                user.project1 = ""
+            if user.project2 is not None:
+                project2 = user.project2
+            else:
+                project2 = user.project2
+            if user.project3 is not None:
+                project3 = user.project3
+            else:
+                project3 = ""
+            return render_template('searchresults.html',username=username, email=email, bio=bio, project1=project1, project2=project2, project3=project3 )
+
+
+
+    return render_template('search.html')
+
+def searchresults():
+    return False
 
 
 def isNotBlank (myString):

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search a user</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+</head>
+<body>
+<h1 class = "text-center"> Search other user</h1>
+<form  method = "post" action="/search">
+    <div class="form-group">
+         <label >Enter the user name:</label>
+        <input type="text" class="form-control" name="name" placeholder="Enter your user name">
+
+    </div>
+
+     <div class="buttons">
+                 <button type="submit" class="btn btn-info ">Search this user</button>
+              </div>
+
+</form>
+<p>{{ message }}</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+</body>
+</html>
